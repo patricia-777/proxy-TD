@@ -46,8 +46,10 @@ def webproxy(cliente,address):
         
         proxyflag=permission(website)
         
-        if proxyflag == 0:
-            reqdeny=permission_terms(msg)
+        if proxyflag == 0 or proxyflag == 2:
+            
+            if proxyflag == 0:
+                reqdeny=permission_terms(msg)
             try:
                 webaddress2=socket.gethostbyname(website)
                 print webaddress2
@@ -61,7 +63,8 @@ def webproxy(cliente,address):
         
                 while True:
                     msgr=tcp.recv(MAX_RECV)
-                    reqdeny1=permission_terms(msgr)
+                    if proxyflag == 0:
+                        reqdeny1=permission_terms(msgr)
                     #print msgr
                     if (len(msgr)>0 and reqdeny == 0 and reqdeny1 == 0):
                         cliente.send(msgr)
@@ -93,7 +96,7 @@ def permission(website):
     
     for line in wl:
         if website == line.rstrip('\n'):
-            flag=0     
+            flag=2     
     for line in bl:
         if website == line.rstrip('\n'):
             flag=1
