@@ -34,7 +34,7 @@ def webproxy(cliente,address):
    # print msg
     msglist=msg.split('\n')
     print "LISTA: ",msglist
-    if msglist=='':
+    if msglist:
         website=(msglist[1].split())[1]
    # print website
         webaddress=socket.gethostbyname(website)
