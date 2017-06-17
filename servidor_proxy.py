@@ -8,6 +8,7 @@ import socket,thread,sys
 
 from modulo_cache import *
 from modulo_permissao import *
+from modulo_log import *
 
 
 
@@ -48,6 +49,11 @@ def webproxy(cliente,address):
 
             for msg_cache in existe_cache:
                 cliente.send(msg_cache)
+
+            # GERANDO LOG PARA A REQUISICAO
+            log(address, website, "PERMITIDO")
+
+
         else:
      
             #FLAG DE VERIFICACAO SE O SITE PODE SER ACESSADO
@@ -87,6 +93,9 @@ def webproxy(cliente,address):
                             # SALVAR NA CACHE DADOS DO SITE
                             recuperar_cache(website, msgr)
 
+                            # GERANDO LOG PARA A REQUISICAO
+                            log(address, website, "PERMITIDO")
+
                             print "connected"
                         else:
                             break
@@ -103,6 +112,9 @@ def webproxy(cliente,address):
                 #MENSAGEM HTML DE ACESSO NEGADO PARA O USUARIO
                 cliente.send(str.encode(blmsg))
 
+                # GERANDO LOG PARA A REQUISICAO
+                log(address, website, "NEGADO")
+
                 
             else: 
 
@@ -113,8 +125,13 @@ def webproxy(cliente,address):
                     cliente.send(str.encode(denymsg))
                     blacklist_add(website)
 
+                    # GERANDO LOG PARA A REQUISICAO
+                    log(address, website, "NEGADO")
+
+
     # FECHANDO CONEXAO
     cliente.close()
+    
  
 
 
@@ -125,7 +142,7 @@ def estabelecedo_conexao(website, msg, httpport):
     webaddress=website
     DEST=webaddress,httpport
     tcp=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    
+
     #CONEXAO ENTRE SERVIDOR E SITE
     tcp.connect(DEST)
     print "conectado a: \n",website
@@ -149,12 +166,13 @@ if __name__ == '__main__':
         ServerSocket=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
         ServerSocket.bind(ServerAddress)
-        ServerSocket.listen(1)
+        ServerSocket.listen(10)
 
         print "Aguardando conexao\n"
 
         # CONEXAO ENTRE SERVIDOR PROXY E USUARIO
         while True:
+
             cliente,address=ServerSocket.accept()
             
             # AO ESCUTAR UM CLIENTE, GERA UMA NOVA THREAD PARA AQUELE USUARIO
