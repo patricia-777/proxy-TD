@@ -4,7 +4,7 @@ Created on 30 de mai de 2017
 '''
 
 # IMPORTANDO MODULOS E BIBLIOTECAS
-import socket,thread,sys
+import socket,thread,sys,time
 
 from modulo_cache import *
 from modulo_permissao import *
@@ -16,7 +16,7 @@ from modulo_log import *
 MAX_RECV=2097152
 httpport=80
 ServerPort=8080
-
+TIME_OUT=10
 
 
            
@@ -69,12 +69,17 @@ def webproxy(cliente,address):
 
                 # CRIACAO DE CONEXAO ENTRE O SERVIDOR E O SITE QUE O USUARIO DESEJA ACESSAR     
                 try:
-                    
+                    start=time.clock()
                     # ESTABELECENDO A CONEXAO ENTRE O CLIENTE E O SERVIDOR HTTP
                     tcp = estabelecedo_conexao(website, msg, httpport)
             
                     # LACO PARA OBTENCAO DA RESPOSTA DO SITE
                     while True:
+                        
+                        # TIMEOUT
+                        if time.clock()-start > TIME_OUT:
+                            log(address,website,"TIMEOUT")
+                            break
                         
                         #RECEBE AS MENSAGEM DE RESPOSTA DO SITE
                         msgr=tcp.recv(MAX_RECV)
@@ -89,7 +94,7 @@ def webproxy(cliente,address):
                         if (len(msgr)>0 and reqdeny == 0 and reqdeny1 == 0):
 
                             cliente.send(msgr)
-
+                            start=time.clock()
                             # SALVAR NA CACHE DADOS DO SITE
                             recuperar_cache(website, msgr)
 
