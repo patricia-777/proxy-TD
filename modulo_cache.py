@@ -1,7 +1,10 @@
 '''
-Created on 16 de jun de 2017
+TD - 2/2017
 @author: Gibson e Lais
 '''
+
+# IMPORTANDO BIBLIOTECAS
+import os, shutil
 
 # VARIAVEIS CONSTANTES
 FILE_EXIST = "False"
@@ -27,7 +30,7 @@ def verificar_cache(website):
 
 # FUNCAO QUE GRAVA NO CACHE OS DADOS DO SITE, CRIANDO UM ARQUIVO TXT COM O NOME SO SITE
 # CASO O ARQUIVO EXISTA MAS NAO TENHA SIDO ENCONTRADO, GERA UM ERRO
-def recuperar_cache(website, msg):
+def criar_cache(website, msg):
     if FILE_EXIST == "False":
         arquivo_cache = open("./cache/"+ website + ".txt", "w")
         arquivo_cache.write(msg)
@@ -35,3 +38,10 @@ def recuperar_cache(website, msg):
         arquivo_cache.close()
     else:
         print "404: File Not Found"
+
+
+def reiniciando_cache():
+    diretorio = './cache'       
+    
+    shutil.rmtree(diretorio)
+    os.makedirs(diretorio)

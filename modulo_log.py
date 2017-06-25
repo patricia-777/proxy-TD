@@ -1,8 +1,10 @@
 '''
-Created on 16 de jun de 2017
+TD - 2/2017
 @author: Gibson e Lais
 '''
 
+# IMPORTANDO BIBLIOTECAS
+import os
 from datetime import datetime
 
 
@@ -28,3 +30,9 @@ def log(address, website, status):
 	
 	arquivo_log.close()
 	
+
+def reiniciando_log():
+	arquivo_log = 'log.txt'
+
+	if os.path.isfile(arquivo_log):
+		os.remove(arquivo_log)
