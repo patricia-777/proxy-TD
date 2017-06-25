@@ -41,7 +41,13 @@ def criar_cache(website, msg):
 
 
 def reiniciando_cache():
-    diretorio = './cache'       
+    diretorio = './cache' 
+
+    if os.path.exists(diretorio):
+        shutil.rmtree(diretorio)
+        os.makedirs(diretorio)
+    else:
+        os.makedirs(diretorio)
     
-    shutil.rmtree(diretorio)
-    os.makedirs(diretorio)
+    
+    
