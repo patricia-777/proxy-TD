@@ -40,6 +40,7 @@ def criar_cache(website, msg):
         print "404: File Not Found"
 
 
+# FUNCAO QUE DELETA A CACHE ATUAL DEIXANDO A PASTA VAZIA
 def reiniciando_cache():
     diretorio = './cache' 
 

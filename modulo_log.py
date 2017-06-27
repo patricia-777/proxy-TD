@@ -7,7 +7,7 @@ TD - 2/2017
 import os
 from datetime import datetime
 
-
+# SALVANDO NO ARQUIVO LOG.TXT AS INFORMACOES DE REQUISICAO
 def log(address, website, status):
 
 	now = datetime.now()
@@ -31,6 +31,7 @@ def log(address, website, status):
 	arquivo_log.close()
 	
 
+# DELETANDO O ARQUIVO DE LOG NO COMECO DA EXECUCAO
 def reiniciando_log():
 	arquivo_log = 'log.txt'
 

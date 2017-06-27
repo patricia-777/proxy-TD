@@ -21,7 +21,7 @@ ServerPort=8080
 if __name__ == '__main__':
     
     # NOME DO SERVIDOR E PORTA #
-    ServerName='192.168.15.5'
+    ServerName='127.0.0.1'
     ServerAddress=ServerName,ServerPort
     
     # CRIACAO DO SOCKET DO SERVIDOR #

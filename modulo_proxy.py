@@ -102,6 +102,8 @@ def webproxy(cliente,address):
                             # GERANDO LOG PARA A REQUISICAO
                             log(address, website, "PERMITIDO")
 
+                            print "conectado"
+
                         else:
                             break
 
